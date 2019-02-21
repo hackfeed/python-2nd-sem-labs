@@ -69,6 +69,7 @@ def about():
 
 
 def exit_run(root):
+    """ Выход из программы. """
     root.destroy()
 
 
@@ -82,13 +83,14 @@ def bind_cleaner(event):
     clean_field(entry_out)
 
 
+""" Создание каскада окна программы. """
 root = Tk()
 # root.iconbitmap("icon.ico")
 root.geometry("300x350+400+200")
 root.resizable(False, False)
 root.title("3Transform")
 
-
+""" Создание меню. """
 main_menu = Menu(root)
 root.config(menu=main_menu, bg="#000080")
 
@@ -125,7 +127,7 @@ entry_in.focus_set()
 entry_in.bind("<Return>", bind_calculate)
 entry_in.bind("<Key>", bind_cleaner)
 
-
+""" Создание наэкранной клавиатуры. """
 button_labels_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "0", "+"]
 button_list = list()
 
@@ -166,4 +168,3 @@ calculate_btn = Button(text="Перевод",
 calculate_btn.place(anchor="c", x=50, y=233)
 
 root.mainloop()
-
