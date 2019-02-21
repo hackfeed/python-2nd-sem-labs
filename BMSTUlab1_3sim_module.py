@@ -127,7 +127,7 @@ def transform(number):
 
     На основе полученного параметра number функция определяет, какой перевод
     необходимо выполнить. Перевод осуществляется при помощи функций
-    abs_transform_to_3sim и transform_to_dec.
+    transform_to_3sim и transform_to_dec.
 
     Передаваемые параметры:
     * number - число в десятичной СС

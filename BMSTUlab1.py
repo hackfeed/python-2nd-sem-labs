@@ -4,11 +4,34 @@ from BMSTUlab1_3sim_module import *
 
 
 def clean_field(*entries):
+    """ Функция очистки полей ввода/вывода.
+
+    Данная функция очищает поля ввода/вывода данных.
+    Очистка может производиться как одного, так и сразу
+    всех полей.
+
+    Передаваемые параметры:
+    * *entries - поля ввода/вывода, которые надо очистить
+
+    """
+
     for entry in entries:
         entry.delete(0, END)
 
 
 def calculate(entry_in, entry_out):
+    """ Функция перевода числа между системами счисления.
+
+    Данная функция, ссылаясь на функцию transform из модуля,
+    переводит числа между СС (автодетект необходимого перевода)
+    и подготавливает поля ввода/вывода для соответственной записи
+    полученного числа.
+
+    Передаваемые параметры:
+    * entry_in, entry_out - поле ввода, поле вывода
+
+    """
+
     number = entry_in.get()
     entry_out.delete(0, END)
     try:
@@ -18,16 +41,13 @@ def calculate(entry_in, entry_out):
                                                     "правильность ввода!")
 
 
-def bind_calculate(event):
-    calculate(entry_in, entry_out)
-
-
 def about():
+    """" Вывод окна "О программе" """
     about_window = Toplevel(root)
-    about_window.iconbitmap("icon.ico")
+    # about_window.iconbitmap("icon.ico")
     about_window.geometry("250x150+425+250")
     about_window.resizable(False, False)
-    about_window.title("About 3Calc")
+    about_window.title("О 3Transform")
     about_window.config(bg="white")
 
     about_label1 = Label(about_window,
@@ -46,8 +66,18 @@ def about():
     about_label2.pack()
 
 
+def bind_calculate(event):
+    """ Перевод при нажатии на клавишу Enter. """
+    calculate(entry_in, entry_out)
+
+
+def bind_cleaner(event):
+    """ Очистка поля вывода при нажатии любой клавиши. """
+    clean_field(entry_out)
+
+
 root = Tk()
-root.iconbitmap("icon.ico")
+# root.iconbitmap("icon.ico")
 root.geometry("300x350+400+200")
 root.resizable(False, False)
 root.title("3Transform")
@@ -64,7 +94,7 @@ clean_menu.add_command(label="Очистить оба поля", command=lambda:
 
 main_menu.add_command(label="Перевести", command=lambda: calculate(entry_in, entry_out))
 main_menu.add_cascade(label="Очистка", menu=clean_menu)
-main_menu.add_command(label="О программе", command=about)
+main_menu.add_command(label="О программе", command=lambda: about())
 
 welcome_label = Label(text="\nВведите число в десятичной или\n"
                            "троичносимметричной СС:",
@@ -85,12 +115,25 @@ entry_out.pack()
 
 entry_in.focus_set()
 entry_in.bind("<Return>", bind_calculate)
+entry_in.bind("<Key>", bind_cleaner)
 
 
 button_labels_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "0", "+"]
 button_list = list()
 
-# for i in range(len(button_list)):
+for i in range(len(button_labels_list)):
+    button_list.append(Button(text=button_labels_list[i],
+                              width=4,
+                              height=2,
+                              command=lambda: entry_in.insert(0, button_labels_list[i])))
+    if i < 3:
+        button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=170)
+    elif i < 6:
+        button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=212)
+    elif i < 9:
+        button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=254)
+    else:
+        button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=296)
 
 root.mainloop()
 
