@@ -36,6 +36,42 @@ def abs_transform_to_3sim(number):
     return result_number
 
 
+def transform_to_3sim(number):
+    """ Функция перевода числа из десятичной системы счисления
+    в троичносимметричную (с учётом знака).
+
+    Число переводится из десятичной системы в троичносимметричную
+    посредством по модулю функции abs_transform_to_3sim.
+    Знак учитывается после перевода по модулю при проверке
+    исходного десятичного числа.
+
+    Передаваемые параметры:
+    * number - число в десятичной СС
+
+    Возвращаемые значения:
+    * result_number - список из знаков полученного числа (в обратном
+    порядке)
+
+    """
+    result_number = abs_transform_to_3sim(number)
+    if int(number) > 0:
+
+        return "".join(result_number)
+
+    elif int(number) < 0:
+        for i in range(len(result_number)):
+            if result_number[i] == "-":
+                result_number[i] = "+"
+            elif result_number[i] == "+":
+                result_number[i] = "-"
+
+        return "".join(result_number)
+
+    else:
+
+        return 0
+
+
 def transform_to_dec(number):
     """ Функция перевода числа из троичносимметричной системы счисления
     в десятичную.
@@ -107,27 +143,10 @@ def transform(number):
 
     pm_set = ("+", "-")
 
-    """ Перевод из десятичной в троичносимметричную СС. """
     if number.isdigit() or number[1:].isdigit() and number[0] in pm_set:
-        result_number = abs_transform_to_3sim(number)
-        if int(number) > 0:
-
-            return "".join(result_number)
-
-        elif int(number) < 0:
-            for i in range(len(result_number)):
-                if result_number[i] == "-":
-                    result_number[i] = "+"
-                elif result_number[i] == "+":
-                    result_number[i] = "-"
-
-            return "".join(result_number)
-
-        else:
-
-            return 0
+        result_number = transform_to_3sim(number)
 
     else:  # docstring коммент не работает. Перевод из 3sim в 10-чную СС
         result_number = transform_to_dec(number)
 
-        return result_number
+    return result_number
