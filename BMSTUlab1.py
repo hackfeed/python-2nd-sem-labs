@@ -66,6 +66,10 @@ def about():
     about_label2.pack()
 
 
+def exit_run(root):
+    root.destroy()
+
+
 def bind_calculate(event):
     """ Перевод при нажатии на клавишу Enter. """
     calculate(entry_in, entry_out)
@@ -125,7 +129,9 @@ for i in range(len(button_labels_list)):
     button_list.append(Button(text=button_labels_list[i],
                               width=4,
                               height=2,
-                              command=lambda: entry_in.insert(0, button_labels_list[i])))
+                              font="consolas 10 bold",
+                              bg="white",
+                              command=lambda: entry_in.insert(END, button_labels_list[i])))
     if i < 3:
         button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=170)
     elif i < 6:
@@ -134,6 +140,22 @@ for i in range(len(button_labels_list)):
         button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=254)
     else:
         button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=296)
+
+exit_btn = Button(text="Выйти",
+                  width=7,
+                  height=2,
+                  font="consolas 10 bold",
+                  bg="white",
+                  command=lambda: exit_run(root))
+exit_btn.place(anchor="c", x=250, y=233)
+
+calculate_btn = Button(text="Перевод",
+                       width=7,
+                       height=2,
+                       font="consolas 10 bold",
+                       bg="white",
+                       command=lambda: calculate(entry_in, entry_out))
+calculate_btn.place(anchor="c", x=50, y=233)
 
 root.mainloop()
 
