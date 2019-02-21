@@ -48,7 +48,7 @@ def about():
     about_window.geometry("250x150+425+250")
     about_window.resizable(False, False)
     about_window.title("О 3Transform")
-    about_window.config(bg="white")
+    about_window.config(bg="#000080")
 
     about_label1 = Label(about_window,
                          text="\nПеревод чисел в десятичной\n "
@@ -56,13 +56,15 @@ def about():
                               "\n\n Made By\n"
                               "Kononenko Sergey\n IU7-23B",
                          font="consolas 10",
-                         bg="white")
+                         bg="#000080",
+                         fg="white")
     about_label1.pack()
 
     about_label2 = Label(about_window,
                          text="@hackfeed",
                          font="consolas 10 bold",
-                         bg="white")
+                         bg="white",
+                         fg="#000080")
     about_label2.pack()
 
 
@@ -88,7 +90,7 @@ root.title("3Transform")
 
 
 main_menu = Menu(root)
-root.config(menu=main_menu, bg="#F0FFF0")
+root.config(menu=main_menu, bg="#000080")
 
 clean_menu = Menu(main_menu, tearoff=0)
 clean_menu.add_command(label="Очистить поле ввода", command=lambda: clean_field(entry_in))
@@ -102,17 +104,19 @@ main_menu.add_command(label="О программе", command=lambda: about())
 
 welcome_label = Label(text="\nВведите число в десятичной или\n"
                            "троичносимметричной СС:",
-                      bg="#F0FFF0",
+                      bg="#000080",
+                      fg="white",
                       font="consolas 10 bold")
 welcome_label.pack()
 
 entry_in = Entry(root, width=40)
 entry_in.pack()
 
-splash_label = Label(text="\nРезультат:",
-                     bg="#F0FFF0",
+result_label = Label(text="\nРезультат:",
+                     bg="#000080",
+                     fg="white",
                      font="consolas 10 bold")
-splash_label.pack()
+result_label.pack()
 
 entry_out = Entry(root, width=40)
 entry_out.pack()
@@ -131,7 +135,9 @@ for i in range(len(button_labels_list)):
                               height=2,
                               font="consolas 10 bold",
                               bg="white",
-                              command=lambda: entry_in.insert(END, button_labels_list[i])))
+                              fg="#000080",
+                              command=lambda i=i: (entry_in.insert(END, button_labels_list[i]),
+                                                   entry_out.delete(0, END))))
     if i < 3:
         button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=170)
     elif i < 6:
@@ -146,6 +152,7 @@ exit_btn = Button(text="Выйти",
                   height=2,
                   font="consolas 10 bold",
                   bg="white",
+                  fg="#000080",
                   command=lambda: exit_run(root))
 exit_btn.place(anchor="c", x=250, y=233)
 
@@ -154,6 +161,7 @@ calculate_btn = Button(text="Перевод",
                        height=2,
                        font="consolas 10 bold",
                        bg="white",
+                       fg="#000080",
                        command=lambda: calculate(entry_in, entry_out))
 calculate_btn.place(anchor="c", x=50, y=233)
 
