@@ -44,7 +44,7 @@ def calculate(entry_in, entry_out):
 def about():
     """" Вывод окна "О программе" """
     about_window = Toplevel(root)
-    # about_window.iconbitmap("icon.ico")
+    about_window.iconbitmap("icon.ico")
     about_window.geometry("250x150+425+250")
     about_window.resizable(False, False)
     about_window.title("О 3Transform")
@@ -85,7 +85,7 @@ def bind_cleaner(event):
 
 """ Создание каскада окна программы. """
 root = Tk()
-# root.iconbitmap("icon.ico")
+root.iconbitmap("icon.ico")
 root.geometry("300x350+400+200")
 root.resizable(False, False)
 root.title("3Transform")
