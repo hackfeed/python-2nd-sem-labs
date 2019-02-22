@@ -37,7 +37,8 @@ def calculate(entry_in, entry_out):
     try:
         entry_out.insert(0, transform(number))
     except ValueError:
-        messagebox.showerror("Ошибка ввода данных", "Данные введены некорректно, проверьте "
+        messagebox.showerror("Ошибка ввода данных", "Данные введены "
+                                                    "некорректно, проверьте "
                                                     "правильность ввода!")
 
 
@@ -95,12 +96,16 @@ main_menu = Menu(root)
 root.config(menu=main_menu, bg="#000080")
 
 clean_menu = Menu(main_menu, tearoff=0)
-clean_menu.add_command(label="Очистить поле ввода", command=lambda: clean_field(entry_in))
-clean_menu.add_command(label="Очистить поле вывода", command=lambda: clean_field(entry_out))
+clean_menu.add_command(label="Очистить поле ввода",
+                       command=lambda: clean_field(entry_in))
+clean_menu.add_command(label="Очистить поле вывода",
+                       command=lambda: clean_field(entry_out))
 clean_menu.add_separator()
-clean_menu.add_command(label="Очистить оба поля", command=lambda: clean_field(entry_in, entry_out))
+clean_menu.add_command(label="Очистить оба поля",
+                       command=lambda: clean_field(entry_in, entry_out))
 
-main_menu.add_command(label="Перевести", command=lambda: calculate(entry_in, entry_out))
+main_menu.add_command(label="Перевести",
+                      command=lambda: calculate(entry_in, entry_out))
 main_menu.add_cascade(label="Очистка", menu=clean_menu)
 main_menu.add_command(label="О программе", command=lambda: about())
 
@@ -128,7 +133,8 @@ entry_in.bind("<Return>", bind_calculate)
 entry_in.bind("<Key>", bind_cleaner)
 
 """ Создание наэкранной клавиатуры. """
-button_labels_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "-", "0", "+"]
+button_labels_list = ["1", "2", "3", "4", "5", "6",
+                      "7", "8", "9", "-", "0", "+"]
 button_list = list()
 
 for i in range(len(button_labels_list)):
@@ -138,7 +144,8 @@ for i in range(len(button_labels_list)):
                               font="consolas 10 bold",
                               bg="white",
                               fg="#000080",
-                              command=lambda i=i: (entry_in.insert(END, button_labels_list[i]),
+                              command=lambda i=i:
+                              (entry_in.insert(END, button_labels_list[i]),
                                                    entry_out.delete(0, END))))
     if i < 3:
         button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=170)
