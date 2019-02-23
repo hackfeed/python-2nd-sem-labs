@@ -45,6 +45,7 @@ def calculate(entry_in, entry_out):
 def about():
     """" Вывод окна "О программе" """
     about_window = Toplevel(root)
+    about_window.grab_set()
     about_window.iconbitmap("icon.ico")
     about_window.geometry("250x150+425+250")
     about_window.resizable(False, False)
@@ -161,7 +162,7 @@ exit_btn = Button(text="Выйти",
                   height=2,
                   font="consolas 10 bold",
                   bg="white",
-                  fg="#000080",
+                  fg="#ff0000",
                   command=lambda: exit_run(root))
 exit_btn.place(anchor="c", x=250, y=233)
 
@@ -170,7 +171,7 @@ calculate_btn = Button(text="Перевод",
                        height=2,
                        font="consolas 10 bold",
                        bg="white",
-                       fg="#000080",
+                       fg="#0ad325",
                        command=lambda: calculate(entry_in, entry_out))
 calculate_btn.place(anchor="c", x=50, y=233)
 
