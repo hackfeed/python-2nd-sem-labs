@@ -16,6 +16,7 @@ def clean_field(*entries):
     """
 
     for entry in entries:
+        entry.config(state="normal")
         entry.delete(0, END)
 
 
@@ -33,9 +34,11 @@ def calculate(entry_in, entry_out):
     """
 
     number = entry_in.get()
+    entry_out.config(state="normal")
     entry_out.delete(0, END)
     try:
         entry_out.insert(0, transform(number))
+        entry_out.config(state="readonly")
     except ValueError:
         messagebox.showerror("Ошибка ввода данных", "Данные введены "
                                                     "некорректно, проверьте "

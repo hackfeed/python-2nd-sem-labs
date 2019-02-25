@@ -20,7 +20,7 @@ def abs_transform_to_3sim(number):
     digits_set = ("1", "2", "3", "4", "5",
                   "6", "7", "8", "9", "0")
 
-    if int(number) > 0:
+    if int(number) >= 0:
         if number[0] == "+":
             number = number[1:]
         else:
