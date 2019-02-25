@@ -16,8 +16,11 @@ def clean_field(*entries):
     """
 
     for entry in entries:
+        last_entry = entry
         entry.config(state="normal")
         entry.delete(0, END)
+
+    last_entry.config(state="readonly")
 
 
 def calculate(entry_in, entry_out):
@@ -129,7 +132,7 @@ result_label = Label(text="\nРезультат:",
                      font="consolas 10 bold")
 result_label.pack()
 
-entry_out = Entry(root, width=40)
+entry_out = Entry(root, width=40, state="readonly")
 entry_out.pack()
 
 entry_in.focus_set()
