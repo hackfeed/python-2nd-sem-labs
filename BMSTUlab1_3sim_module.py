@@ -17,6 +17,20 @@ def abs_transform_to_3sim(number):
 
     """
 
+    digits_set = ("1", "2", "3", "4", "5",
+                  "6", "7", "8", "9", "0")
+
+    if int(number) > 0:
+        if number[0] == "+":
+            number = number[1:]
+        else:
+            pass
+    else:
+        number = number[1:]
+    for dig in number:
+        if dig not in digits_set:
+            raise ValueError
+
     result_number = list()
     number = abs(int(number))
 
@@ -143,7 +157,7 @@ def transform(number):
 
     pm_set = ("+", "-")
 
-    if number.isdigit() or number[1:].isdigit() and number[0] in pm_set:
+    if number.isdigit() or int(number[1:]) > 0 and number[0] in pm_set:
         result_number = transform_to_3sim(number)
 
     else:  # docstring коммент не работает. Перевод из 3sim в 10-чную СС
