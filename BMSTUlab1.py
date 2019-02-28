@@ -58,8 +58,8 @@ def about():
     about_label1 = Label(about_window,
                          text="\nПеревод чисел в десятичной\n "
                               "и троичносимметричной СС"
-                              "\n\n Made By\n"
-                              "Kononenko Sergey\n IU7-23B",
+                              "\n\n"
+                              "Kononenko Sergey ICS7-23B",
                          font="consolas 10",
                          bg="#000080",
                          fg="white")
@@ -71,6 +71,16 @@ def about():
                          bg="white",
                          fg="#000080")
     about_label2.pack()
+
+    exit_about = Button(about_window, text="Выйти",
+                        width=6,
+                        height=2,
+                        font="consolas 10 bold",
+                        bg="#000080",
+                        fg="white",
+                        relief="flat",
+                        command=lambda: exit_run(about_window))
+    exit_about.pack()
 
 
 def exit_run(root):
