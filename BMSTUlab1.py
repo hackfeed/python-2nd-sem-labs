@@ -164,7 +164,9 @@ for i in range(len(button_labels_list)):
                               fg="#000080",
                               command=lambda i=i:
                               (entry_in.insert(END, button_labels_list[i]),
-                                                   entry_out.delete(0, END))))
+                               entry_out.config(state="normal"),
+                               entry_out.delete(0, END),
+                               entry_out.config(state="readonly"))))
     if i < 3:
         button_list[i].place(anchor="c", x=110 + i % 3 * 40, y=170)
     elif i < 6:
@@ -191,5 +193,18 @@ calculate_btn = Button(text="Перевод",
                        fg="#0ad325",
                        command=lambda: calculate(entry_in, entry_out))
 calculate_btn.place(anchor="c", x=50, y=233)
+
+clear_btn = Button(text="C",
+                   width=4,
+                   height=2,
+                   font="consolas 10 bold",
+                   bg="white",
+                   fg="#000080",
+                   command=lambda:
+                   (entry_in.delete(len(entry_in.get())-1, END),
+                    entry_out.config(state="normal"),
+                    entry_out.delete(0, END),
+                    entry_out.config(state="readonly")))
+clear_btn.place(anchor="c", x=230, y=296)
 
 root.mainloop()
