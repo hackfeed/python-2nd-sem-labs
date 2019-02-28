@@ -16,11 +16,8 @@ def clean_field(*entries):
     """
 
     for entry in entries:
-        last_entry = entry
         entry.config(state="normal")
         entry.delete(0, END)
-
-    last_entry.config(state="readonly")
 
 
 def calculate(entry_in, entry_out):
@@ -89,6 +86,7 @@ def bind_calculate(event):
 def bind_cleaner(event):
     """ Очистка поля вывода при нажатии любой клавиши. """
     clean_field(entry_out)
+    entry_out.config(state="readonly")
 
 
 """ Создание каскада окна программы. """
@@ -104,12 +102,15 @@ root.config(menu=main_menu, bg="#000080")
 
 clean_menu = Menu(main_menu, tearoff=0)
 clean_menu.add_command(label="Очистить поле ввода",
-                       command=lambda: clean_field(entry_in))
+                       command=lambda: (clean_field(entry_in),
+                                        entry_out.config(state="readonly")))
 clean_menu.add_command(label="Очистить поле вывода",
-                       command=lambda: clean_field(entry_out))
+                       command=lambda: (clean_field(entry_out),
+                                        entry_out.config(state="readonly")))
 clean_menu.add_separator()
 clean_menu.add_command(label="Очистить оба поля",
-                       command=lambda: clean_field(entry_in, entry_out))
+                       command=lambda: (clean_field(entry_in, entry_out),
+                                        entry_out.config(state="readonly")))
 
 main_menu.add_command(label="Перевести",
                       command=lambda: calculate(entry_in, entry_out))
