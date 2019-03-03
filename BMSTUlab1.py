@@ -33,7 +33,7 @@ def calculate(entry_in, entry_out):
 
     """
 
-    number = entry_in.get()
+    number = entry_in.get().strip()
     entry_out.config(state="normal")
     entry_out.delete(0, END)
     try:
