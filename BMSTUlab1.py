@@ -122,10 +122,16 @@ clean_menu.add_command(label="Очистить оба поля",
                        command=lambda: (clean_field(entry_in, entry_out),
                                         entry_out.config(state="readonly")))
 
-main_menu.add_command(label="Перевести",
-                      command=lambda: calculate(entry_in, entry_out))
+calculate_menu = Menu(main_menu, tearoff=0)
+calculate_menu.add_command(label="Перевести",
+                           command=lambda: calculate(entry_in, entry_out))
+
+about_menu = Menu(main_menu, tearoff=0)
+about_menu.add_command(label="О программе", command=lambda: about())
+
+main_menu.add_cascade(label="Перевод", menu=calculate_menu)
 main_menu.add_cascade(label="Очистка", menu=clean_menu)
-main_menu.add_command(label="О программе", command=lambda: about())
+main_menu.add_cascade(label="Справка", menu=about_menu)
 
 welcome_label = Label(text="\nВведите число в десятичной или\n"
                            "троичносимметричной СС:",
