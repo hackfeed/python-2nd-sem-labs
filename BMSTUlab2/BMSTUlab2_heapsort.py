@@ -72,28 +72,32 @@ def step_by_step_heapsort(in_list):
     * in_list - исходный список
 
     Возвращаемые значения:
-    * in_list - остортированный список
+    * res_str - ход действий для сортировки списка
 
     """
 
     n = len(in_list)
+    res_str = ""
 
     for i in range(n, -1, -1):
         heapify(in_list, n, i)
-    print(in_list)
+        in_list_cp = in_list[:]
+    res_str += "Формируем максимальную кучу\n" + str(in_list_cp) + "\n"
 
     for i in range(n - 1, 0, -1):
-        in_list[i], in_list[0] = in_list[0], in_list[i]  # swap
-        print(in_list)
+        in_list[i], in_list[0] = in_list[0], in_list[i]
+        in_list_cp = in_list[:]
+        res_str += "Меняем корень с последним узлом\n" + str(in_list_cp) + "\n"
         heapify(in_list, i, 0)
-        print(in_list)
+        in_list_cp = in_list[:]
+        res_str += "Формируем максимальную кучу\n" + str(in_list_cp) + "\n"
 
-    return in_list
+    return res_str
 
 
 """ Тестовый вызов.
 
-test_list = [4, 10, 3, 5, 1]
+test_list = [-9, 2, 4, -15, 6, 15]
 new_test_list = test_list[:]
 
 print(test_list)
