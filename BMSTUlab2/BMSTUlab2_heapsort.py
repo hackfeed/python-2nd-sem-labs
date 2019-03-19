@@ -76,23 +76,27 @@ def step_by_step_heapsort(in_list):
 
     """
 
-    n = len(in_list)
     res_str = ""
 
-    for i in range(n, -1, -1):
-        heapify(in_list, n, i)
-        in_list_cp = in_list[:]
-    res_str += "Формируем максимальную кучу\n" + str(in_list_cp) + "\n"
-
-    for i in range(n - 1, 0, -1):
-        in_list[i], in_list[0] = in_list[0], in_list[i]
-        in_list_cp = in_list[:]
-        res_str += "Меняем корень с последним узлом\n" + str(in_list_cp) + "\n"
-        heapify(in_list, i, 0)
-        in_list_cp = in_list[:]
+    try:
+        n = len(in_list)
+        for i in range(n, -1, -1):
+            heapify(in_list, n, i)
+            in_list_cp = in_list[:]
         res_str += "Формируем максимальную кучу\n" + str(in_list_cp) + "\n"
 
-    return res_str
+        for i in range(n - 1, 0, -1):
+            in_list[i], in_list[0] = in_list[0], in_list[i]
+            in_list_cp = in_list[:]
+            res_str += "Меняем корень с последним узлом\n" + str(in_list_cp) + "\n"
+            heapify(in_list, i, 0)
+            in_list_cp = in_list[:]
+            res_str += "Формируем максимальную кучу\n" + str(in_list_cp) + "\n"
+
+        return res_str
+
+    except TypeError:
+        return res_str
 
 
 """ Тестовый вызов.
