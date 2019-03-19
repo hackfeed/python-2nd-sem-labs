@@ -1,6 +1,19 @@
 from tkinter import *
 from tkinter import messagebox
+from random import randint
+from time import time
 from BMSTUlab2_heapsort import *
+
+
+def int_list_getter(in_entry):
+    try:
+        int_list = [int(x) for x in in_entry.get().strip().split()]
+
+        return int_list
+    except ValueError:
+        messagebox.showerror("Ошибка ввода данных", "Данные введены "
+                                                    "некорректно, проверьте "
+                                                    "правильность ввода!")
 
 
 def label_writer(to_write, label_out):
@@ -62,10 +75,8 @@ def sort_visual():
                                 fg="#000080",
                                 command=lambda: label_writer(
                                     step_by_step_heapsort(
-                                        [int(x) for x in s_v_w_entry
-                                            .get()
-                                            .strip()
-                                            .split()]), s_v_w_result_label))
+                                        int_list_getter(s_v_w_entry)),
+                                    s_v_w_result_label))
     sort_visual_button.pack()
 
     s_v_w_separate_label = Label(sort_visual_window,
@@ -78,6 +89,52 @@ def sort_visual():
                                fg="white",
                                font="consolas 10 bold")
     s_v_w_result_label.pack()
+
+
+def sort_timingly(size, dim_list):
+    if size < 1 or dim_list[0] >= dim_list[1]:
+        messagebox.showerror("Ошибка ввода", "Введены некорректные данные!\n"
+                             "Проверьте правильность ввода.")
+    else:
+        random_list = list()
+        time_list = list()
+
+        for i in range(size):
+            random_list.append(randint(dim_list[0], dim_list[1]))
+
+        ascending_sorted_list = random_list[:]
+        heapsort(ascending_sorted_list)
+        start_time = time()
+        heapsort(ascending_sorted_list)
+        end_time = time()
+
+        time_list.append(round(end_time - start_time, 4))
+
+        random_sorted_list = random_list[:]
+        heapsort(random_sorted_list)
+        start_time = time()
+        heapsort(random_sorted_list)
+        end_time = time()
+
+        time_list.append(round(end_time - start_time, 4))
+
+        descending_sorted_list = random_list[:]
+        heapsort(descending_sorted_list)
+        descending_sorted_list.reverse()
+        start_time = time()
+        heapsort(descending_sorted_list)
+        end_time = time()
+
+        time_list.append(round(end_time - start_time, 4))
+
+        sort_sorted_list = random_list[:]
+        start_time = time()
+        sort_sorted_list.sort()
+        end_time = time()
+
+        time_list.append(round(end_time - start_time, 4))
+
+        return time_list
 
 
 def about():
@@ -128,7 +185,7 @@ def exit_run(root):
 """ Создание каскада окна программы. """
 root = Tk()
 root.iconbitmap("icon.ico")
-root.geometry("600x400+400+200")
+root.geometry("593x320+400+200")
 root.resizable(False, False)
 root.title("HeapSorter")
 
@@ -140,20 +197,25 @@ clean_menu = Menu(main_menu, tearoff=0)
 clean_menu.add_command(label="Очистить поле ввода N1",
                        command=lambda: clean_entry(n1_entry, n1_count_entry))
 clean_menu.add_command(label="Очистить поле вывода N1",
-                       command=lambda: clean_field(label_out_n1))
+                       command=lambda: clean_label(label_out_n1))
 clean_menu.add_separator()
 clean_menu.add_command(label="Очистить поле ввода N2",
                        command=lambda: clean_entry(n2_entry, n2_count_entry))
 clean_menu.add_command(label="Очистить поле вывода N2",
-                       command=lambda: clean_field(label_out_n2))
+                       command=lambda: clean_label(label_out_n2))
 clean_menu.add_separator()
 clean_menu.add_command(label="Очистить поле ввода N3",
                        command=lambda: clean_entry(n3_entry, n3_count_entry))
 clean_menu.add_command(label="Очистить поле вывода N3",
-                       command=lambda: clean_field(label_out_n3))
+                       command=lambda: clean_label(label_out_n3))
 clean_menu.add_separator()
 clean_menu.add_command(label="Очистить все поля",
-                       command=lambda: clean_field(entry_in, entry_out))
+                       command=lambda: (clean_entry(n1_entry, n1_count_entry,
+                                                    n2_entry, n2_count_entry,
+                                                    n3_entry, n3_count_entry),
+                                        clean_label(label_out_n1,
+                                                    label_out_n2,
+                                                    label_out_n3)))
 
 workmode_menu = Menu(main_menu, tearoff=0)
 workmode_menu.add_command(label="Режим визуализации",
@@ -173,38 +235,38 @@ main_menu.add_cascade(label="Очистка", menu=clean_menu)
 main_menu.add_cascade(label="Справка", menu=about_menu)
 
 welcome_label = Label(root,
-                       text="Сравнение времени, затраченного на пирамидальную "
-                            "сортировку на различных массивах",
-                       font="consolas 10 bold",
-                       bg="white",
-                       fg="#000080")
+                      text="Сравнение времени, затраченного на пирамидальную "
+                           "сортировку на различных массивах",
+                      font="consolas 10 bold",
+                      bg="white",
+                      fg="#000080")
 welcome_label.grid(row=1, rowspan=2, column=1, columnspan=4)
 
 n1_label = Label(root,
-                       text="Введите N1",
-                       font="consolas 10",
-                       bg="#000080",
-                       fg="white")
+                 text="Введите N1",
+                 font="consolas 10",
+                 bg="#000080",
+                 fg="white")
 n1_label.grid(row=3, column=2)
 
 n1_count_entry = Entry(root, width=20)
 n1_count_entry.grid(row=4, column=2)
 
 n2_label = Label(root,
-                       text="Введите N2",
-                       font="consolas 10",
-                       bg="#000080",
-                       fg="white")
+                 text="Введите N2",
+                 font="consolas 10",
+                 bg="#000080",
+                 fg="white")
 n2_label.grid(row=3, column=3)
 
 n2_count_entry = Entry(root, width=20)
 n2_count_entry.grid(row=4, column=3)
 
 n3_label = Label(root,
-                       text="Введите N3",
-                       font="consolas 10",
-                       bg="#000080",
-                       fg="white")
+                 text="Введите N3",
+                 font="consolas 10",
+                 bg="#000080",
+                 fg="white")
 n3_label.grid(row=3, column=4)
 
 n3_count_entry = Entry(root, width=20)
@@ -220,6 +282,18 @@ n1_input_label.grid(row=5, column=2)
 n1_entry = Entry(root, width=20)
 n1_entry.grid(row=6, column=2)
 
+n1_asc_sorted = Entry(root, width=20)
+n1_asc_sorted.grid(row=8, rowspan=2, column=2)
+n1_desc_sorted = Entry(root, width=20)
+n1_desc_sorted.grid(row=10, rowspan=2, column=2)
+n1_rand_sorted = Entry(root, width=20)
+n1_rand_sorted.grid(row=12, rowspan=2, column=2)
+n1_sort_sorted = Entry(root, width=20)
+n1_sort_sorted.grid(row=14, rowspan=2, column=2)
+n1_out_entries = [n1_asc_sorted, n1_desc_sorted, n1_rand_sorted, n1_sort_sorted]
+for entry in n1_out_entries:
+    entry.config(state="readonly")
+
 n2_input_label = Label(root,
                        text="Введите диапазон N2",
                        font="consolas 10",
@@ -229,6 +303,18 @@ n2_input_label.grid(row=5, column=3)
 
 n2_entry = Entry(root, width=20)
 n2_entry.grid(row=6, column=3)
+
+n2_asc_sorted = Entry(root, width=20)
+n2_asc_sorted.grid(row=8, rowspan=2, column=3)
+n2_desc_sorted = Entry(root, width=20)
+n2_desc_sorted.grid(row=10, rowspan=2, column=3)
+n2_rand_sorted = Entry(root, width=20)
+n2_rand_sorted.grid(row=12, rowspan=2, column=3)
+n2_sort_sorted = Entry(root, width=20)
+n2_sort_sorted.grid(row=14, rowspan=2, column=3)
+n2_out_entries = [n2_asc_sorted, n2_desc_sorted, n2_rand_sorted, n2_sort_sorted]
+for entry in n2_out_entries:
+    entry.config(state="readonly")
 
 n3_input_label = Label(root,
                        text="Введите диапазон N3",
@@ -240,18 +326,58 @@ n3_input_label.grid(row=5, column=4)
 n3_entry = Entry(root, width=20)
 n3_entry.grid(row=6, column=4)
 
-sorted_label = Label(root,
-                       text="\nУпорядоченный по\n"
-                            "возрастанию массив\n\n"
-                            "Заданный случайным\n"
-                            "образом массив\n\n"
-                            "Сортированный в обратном\n"
-                            "порядке массив\n\n"
-                            "Сортированный функцией\n"
-                            "sort массив",
-                       font="consolas 10",
-                       bg="#000080",
-                       fg="white")
-sorted_label.grid(row=7, rowspan=11, column=1)
+n3_asc_sorted = Entry(root, width=20)
+n3_asc_sorted.grid(row=8, rowspan=2, column=4)
+n3_desc_sorted = Entry(root, width=20)
+n3_desc_sorted.grid(row=10, rowspan=2, column=4)
+n3_rand_sorted = Entry(root, width=20)
+n3_rand_sorted.grid(row=12, rowspan=2, column=4)
+n3_sort_sorted = Entry(root, width=20)
+n3_sort_sorted.grid(row=14, rowspan=2, column=4)
+n3_out_entries = [n3_asc_sorted, n3_desc_sorted, n3_rand_sorted, n3_sort_sorted]
+for entry in n3_out_entries:
+    entry.config(state="readonly")
+
+pass_label = Label(root, text="", bg="#000080")
+pass_label.grid(row=7, columnspan=4)
+
+sorted_ascending_label = Label(root,
+                     text="Упорядоченный по\n возрастанию массив",
+                     font="consolas 10",
+                     bg="#000080",
+                     fg="white")
+sorted_ascending_label.grid(row=8, rowspan=2, column=1)
+
+sorted_descending_label = Label(root,
+                     text="Упорядоченный по\n убыванию массив",
+                     font="consolas 10",
+                     bg="#000080",
+                     fg="white")
+sorted_descending_label.grid(row=10, rowspan=2, column=1)
+
+sorted_random_label = Label(root,
+                     text="Заданный случайным\n образом массив",
+                     font="consolas 10",
+                     bg="#000080",
+                     fg="white")
+sorted_random_label.grid(row=12, rowspan=2, column=1)
+
+sorted_sort_label = Label(root,
+                     text="Отсортированный функцией\n sort массив",
+                     font="consolas 10",
+                     bg="#000080",
+                     fg="white")
+sorted_sort_label.grid(row=14, rowspan=2, column=1)
+
+
+
+sort_all_button = Button(root, text="Отсортировать",
+                         width=16,
+                         height=2,
+                         font="consolas 10 bold",
+                         bg="white",
+                         fg="#000080",
+                         command=lambda: sort_timingly(1, [5,7]))
+sort_all_button.grid(row=4, rowspan=2, column=1)
 
 root.mainloop()
