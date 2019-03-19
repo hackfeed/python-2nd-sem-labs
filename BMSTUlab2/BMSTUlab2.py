@@ -9,7 +9,12 @@ def int_list_getter(in_entry):
     try:
         int_list = [int(x) for x in in_entry.get().strip().split()]
 
+        if len(int_list) == 0 or len(int_list) > 5 or \
+                isinstance(int_list, (str, type(None))):
+            raise ValueError
+
         return int_list
+
     except ValueError:
         messagebox.showerror("Ошибка ввода данных", "Данные введены "
                                                     "некорректно, проверьте "
@@ -62,6 +67,8 @@ def sort_visual():
     s_v_w_entry = Entry(sort_visual_window, width=30)
     s_v_w_entry.pack()
 
+    s_v_w_entry.focus_set()
+
     s_v_w_separate_label = Label(sort_visual_window,
                                  text="",
                                  bg="#000080")
@@ -72,10 +79,10 @@ def sort_visual():
                                 height=2,
                                 font="consolas 10 bold",
                                 bg="white",
-                                fg="#000080",
-                                command=lambda: label_writer(
-                                    step_by_step_heapsort(
-                                        int_list_getter(s_v_w_entry)),
+                                fg="#0ad325",
+                                command=lambda:
+                                label_writer(step_by_step_heapsort(
+                                    int_list_getter(s_v_w_entry)),
                                     s_v_w_result_label))
     sort_visual_button.pack()
 
@@ -85,10 +92,21 @@ def sort_visual():
     s_v_w_separate_label.pack()
 
     s_v_w_result_label = Label(sort_visual_window, text="",
+                               width=32,
+                               height=19,
                                bg="#000080",
                                fg="white",
                                font="consolas 10 bold")
     s_v_w_result_label.pack()
+
+    exit_visual_button = Button(sort_visual_window, text="Выйти",
+                                width=16,
+                                height=2,
+                                font="consolas 10 bold",
+                                bg="white",
+                                fg="#ff0000",
+                                command=lambda: exit_run(sort_visual_window))
+    exit_visual_button.pack()
 
 
 def sort_timingly(size, dim_list):
@@ -376,7 +394,7 @@ sort_all_button = Button(root, text="Отсортировать",
                          height=2,
                          font="consolas 10 bold",
                          bg="white",
-                         fg="#000080",
+                         fg="#0ad325",
                          command=lambda: sort_timingly(1, [5,7]))
 sort_all_button.grid(row=4, rowspan=2, column=1)
 
