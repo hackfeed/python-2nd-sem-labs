@@ -6,6 +6,21 @@ from BMSTUlab2_heapsort import *
 
 
 def int_list_getter(in_entry):
+    """ Функция формирования целочисленного списка.
+
+    Данная функция формирует целочисленный список для
+    визуализации работы пирамидальной сортировки
+    (с условием, что элементов в таком списке должно быть
+    не больше 5).
+
+    Передаваемые параметры:
+    * in_entry - поле ввода, из которого формируется список
+
+    Возвращаемые значения:
+    * int_list - сформированный целочисленный список
+
+    """
+
     try:
         int_list = [int(x) for x in in_entry.get().strip().split()]
 
@@ -24,6 +39,20 @@ def int_list_getter(in_entry):
 
 
 def int_list_getter_dim(in_entry):
+    """ Функция формирования целочисленного списка.
+
+    Данная функция формирует целочисленный список для
+    получения интервала формирования чисел в исходном
+    для сортировки массиве (таких чисел должно быть 2).
+
+    Передаваемые параметры:
+    * in_entry - поле ввода, из которого формируется список
+
+    Возвращаемые значения:
+    * int_list - сформированный целочисленный список
+
+    """
+
     try:
         int_list = [int(x) for x in in_entry.get().strip().split()]
 
@@ -40,6 +69,16 @@ def int_list_getter_dim(in_entry):
 
 
 def label_writer(to_write, label_out):
+    """ Функция записи в Label.
+
+    Данная функция изменяет содержимое поля text в Label.
+
+    Передаваемые параметры:
+    * to_write - что будет записано в Label
+    * label_out - Label, в который будет произведена запись
+
+    """
+
     label_out["text"] = ""
     label_out["text"] += to_write
 
@@ -62,6 +101,17 @@ def clean_entry(*entries):
 
 
 def clean_entry_list(entry_list):
+    """ Функция очистки списков полей ввода.
+
+    Данная функция очищает поля ввода/вывода данных.
+    Очищаются все поля ввода/вывода, содержащиеся в списке
+    entry_list.
+
+    Передаваемые параметры:
+    * entry_list - список полей ввода/вывода, которые надо очистить
+
+    """
+
     for entry in entry_list:
         entry.config(state="normal")
         entry.delete(0, END)
@@ -69,18 +119,36 @@ def clean_entry_list(entry_list):
 
 
 def clean_label(*labels):
+    """ Функция очистки Label'ов.
+
+    Данная функция очищает Label'ы
+    (изменяет их поля text на пустую строку "")
+
+    Передаваемые параметры:
+    * *labels - Label'ы, которые надо очистить
+
+    """
+
     for label in labels:
         label["text"] = ""
 
 
 def sort_visual():
+    """ Функция вызова окна с визуализацие сортировки.
+
+    Данная функция реализует визуализацию алгоритма
+    пирамидальной сортировки (сортировка кучей).
+
+    """
     def bind_visual_sort(event):
+        """ Сортировка при нажатии на клавишу Enter. """
         label_writer(
             step_by_step_heapsort(int_list_getter(s_v_w_entry)),
             s_v_w_result_label
         )
 
     def bind_visual_clean(event):
+        """ Очистка при нажатии любой клавиши. """
         clean_label(s_v_w_result_label)
 
     sort_visual_window = Toplevel(root)
@@ -188,6 +256,22 @@ def about():
 
 
 def sort_timingly(size, dim_list):
+    """ Функция сортировки четырху типов массивов с замером времени,
+    затраченного на сортировку.
+
+    Данная функция формирует случайный список с заданными параметрами,
+    затем сортирует его в соответствии с условием и замеряет время
+    затраченное на проделанную операцию.
+
+    Передаваемые параметры:
+    * size - размер массива
+    * dim_list - границы чисел, которые будут использованы в массиве
+
+    Возвращаемые значения:
+    * time_list - список с полученными значениями времени
+
+    """
+
     try:
         if size < 1 or dim_list[0] >= dim_list[1]:
             messagebox.showerror("Ошибка ввода данных", "Данные введены "
@@ -200,6 +284,7 @@ def sort_timingly(size, dim_list):
             for i in range(size):
                 random_list.append(randint(dim_list[0], dim_list[1]))
 
+            """ Массив, упорядоченный по возрастанию. """
             ascending_sorted_list = random_list[:]
             heapsort(ascending_sorted_list)
             start_time = time()
@@ -209,6 +294,7 @@ def sort_timingly(size, dim_list):
             res_str = "{0:.5f}".format(end_time - start_time)
             time_list.append(res_str)
 
+            """ Случайно заданный массив. """
             random_sorted_list = random_list[:]
             heapsort(random_sorted_list)
             start_time = time()
@@ -218,6 +304,7 @@ def sort_timingly(size, dim_list):
             res_str = "{0:.5f}".format(end_time - start_time)
             time_list.append(res_str)
 
+            """ Массив, упорядоченный по убыванию. """
             descending_sorted_list = random_list[:]
             heapsort(descending_sorted_list)
             descending_sorted_list.reverse()
@@ -228,6 +315,7 @@ def sort_timingly(size, dim_list):
             res_str = "{0:.5f}".format(end_time - start_time)
             time_list.append(res_str)
 
+            """ Массив, отсортированный встроенной функцией sort. """
             sort_sorted_list = random_list[:]
             start_time = time()
             sort_sorted_list.sort()
@@ -249,6 +337,15 @@ def sort_timingly(size, dim_list):
 
 
 def sort_comparative(entry_in_n, entry_in_dim, entry_out_list):
+    """ Функция записи полученных результатов в поля вывода.
+
+    Принимаемые параметры:
+    * entry_in_n - поле, в котором указан размер массива
+    * entry_in_dim - поле, в котором указаны границы массива
+    * entry_out_list - поля вывода
+
+    """
+
     try:
         n_value = int(entry_in_n.get().strip())
         if n_value < 1:
@@ -287,32 +384,32 @@ def exit_run(root):
 
 
 def bind_sort_n1(event):
-    """ Перевод при нажатии на клавишу Enter. """
+    """ Сортировка для N1 при нажатии на клавишу Enter. """
     sort_comparative(n1_count_entry, n1_entry, n1_out_entries)
 
 
 def bind_sort_n2(event):
-    """ Перевод при нажатии на клавишу Enter. """
+    """ Сортировка для N2 при нажатии на клавишу Enter. """
     sort_comparative(n2_count_entry, n2_entry, n2_out_entries)
 
 
 def bind_sort_n3(event):
-    """ Перевод при нажатии на клавишу Enter. """
+    """ Сортировка для N3 при нажатии на клавишу Enter. """
     sort_comparative(n3_count_entry, n3_entry, n3_out_entries)
 
 
 def bind_cleaner_n1(event):
-    """ Очистка поля вывода при нажатии любой клавиши. """
+    """ Очистка полей вывода для N1 при нажатии любой клавиши. """
     clean_entry_list(n1_out_entries)
 
 
 def bind_cleaner_n2(event):
-    """ Очистка поля вывода при нажатии любой клавиши. """
+    """ Очистка полей вывода для N2 при нажатии любой клавиши. """
     clean_entry_list(n2_out_entries)
 
 
 def bind_cleaner_n3(event):
-    """ Очистка поля вывода при нажатии любой клавиши. """
+    """ Очистка полей вывода для N3 при нажатии любой клавиши. """
     clean_entry_list(n3_out_entries)
 
 
@@ -369,6 +466,7 @@ main_menu.add_cascade(label="Режим работы", menu=workmode_menu)
 main_menu.add_cascade(label="Очистка", menu=clean_menu)
 main_menu.add_cascade(label="Справка", menu=about_menu)
 
+""" Организация UI. """
 welcome_label = Label(root,
                       text="Сравнение времени, затраченного на пирамидальную "
                            "сортировку на различных массивах",
@@ -477,31 +575,31 @@ pass_label = Label(root, text="", bg="#000080")
 pass_label.grid(row=7, columnspan=4)
 
 sorted_ascending_label = Label(root,
-                     text="Упорядоченный по\n возрастанию массив",
-                     font="consolas 10",
-                     bg="#000080",
-                     fg="white")
+                               text="Упорядоченный по\n возрастанию массив",
+                               font="consolas 10",
+                               bg="#000080",
+                               fg="white")
 sorted_ascending_label.grid(row=8, rowspan=2, column=1)
 
 sorted_descending_label = Label(root,
-                     text="Упорядоченный по\n убыванию массив",
-                     font="consolas 10",
-                     bg="#000080",
-                     fg="white")
+                                text="Упорядоченный по\n убыванию массив",
+                                font="consolas 10",
+                                bg="#000080",
+                                fg="white")
 sorted_descending_label.grid(row=10, rowspan=2, column=1)
 
 sorted_random_label = Label(root,
-                     text="Заданный случайным\n образом массив",
-                     font="consolas 10",
-                     bg="#000080",
-                     fg="white")
+                            text="Заданный случайным\n образом массив",
+                            font="consolas 10",
+                            bg="#000080",
+                            fg="white")
 sorted_random_label.grid(row=12, rowspan=2, column=1)
 
 sorted_sort_label = Label(root,
-                     text="Отсортированный функцией\n sort массив",
-                     font="consolas 10",
-                     bg="#000080",
-                     fg="white")
+                          text="Отсортированный функцией\n sort массив",
+                          font="consolas 10",
+                          bg="#000080",
+                          fg="white")
 sorted_sort_label.grid(row=14, rowspan=2, column=1)
 
 sort_all_button = Button(root, text="Отсортировать",
