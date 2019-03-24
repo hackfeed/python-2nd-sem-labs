@@ -17,7 +17,9 @@ def int_list_getter(in_entry):
 
     except ValueError:
         messagebox.showerror("Ошибка ввода данных", "Данные введены "
-                                                    "некорректно, проверьте "
+                                                    "некорректно "
+                                                    "или введено больше 5 "
+                                                    "чисел, проверьте "
                                                     "правильность ввода!")
 
 
@@ -188,8 +190,9 @@ def about():
 def sort_timingly(size, dim_list):
     try:
         if size < 1 or dim_list[0] >= dim_list[1]:
-            messagebox.showerror("Ошибка ввода", "Введены некорректные данные!\n"
-                                 "Проверьте правильность ввода.")
+            messagebox.showerror("Ошибка ввода данных", "Данные введены "
+                                                        "некорректно, проверьте "
+                                                        "правильность ввода!")
         else:
             random_list = list()
             time_list = list()
@@ -203,7 +206,8 @@ def sort_timingly(size, dim_list):
             heapsort(ascending_sorted_list)
             end_time = time()
 
-            time_list.append(round(end_time - start_time, 7))
+            res_str = "{0:.5f}".format(end_time - start_time)
+            time_list.append(res_str)
 
             random_sorted_list = random_list[:]
             heapsort(random_sorted_list)
@@ -211,7 +215,8 @@ def sort_timingly(size, dim_list):
             heapsort(random_sorted_list)
             end_time = time()
 
-            time_list.append(round(end_time - start_time, 7))
+            res_str = "{0:.5f}".format(end_time - start_time)
+            time_list.append(res_str)
 
             descending_sorted_list = random_list[:]
             heapsort(descending_sorted_list)
@@ -220,19 +225,27 @@ def sort_timingly(size, dim_list):
             heapsort(descending_sorted_list)
             end_time = time()
 
-            time_list.append(round(end_time - start_time, 7))
+            res_str = "{0:.5f}".format(end_time - start_time)
+            time_list.append(res_str)
 
             sort_sorted_list = random_list[:]
             start_time = time()
             sort_sorted_list.sort()
             end_time = time()
 
-            time_list.append(round(end_time - start_time, 7))
+            res_str = "{0:.5f}".format(end_time - start_time)
+            time_list.append(res_str)
 
             return time_list
 
     except TypeError:
         pass
+
+    except IndexError:
+        messagebox.showinfo("Неполные данные", "Данные введены "
+                                               "некорректно. Пожалуйста, "
+                                               "введите диапазон в формате "
+                                               "<левая_граница правая_граница>!")
 
 
 def sort_comparative(entry_in_n, entry_in_dim, entry_out_list):
@@ -245,17 +258,21 @@ def sort_comparative(entry_in_n, entry_in_dim, entry_out_list):
             for entry in entry_out_list:
                 entry.config(state="normal")
                 entry.delete(0, END)
+                entry.config(state="readonly")
 
             sorted_time_list = sort_timingly(n_value, dim_list)
 
             k = 0
 
             for entry in entry_out_list:
+                entry.config(state="normal")
                 entry.insert(0, sorted_time_list[k])
                 entry.config(state="readonly")
                 k += 1
 
     except ValueError:
+        for entry in entry_out_list:
+            entry.config(state="readonly")
         messagebox.showerror("Ошибка ввода данных", "Данные введены "
                                                     "некорректно, проверьте "
                                                     "правильность ввода!")
