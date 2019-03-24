@@ -302,7 +302,7 @@ def bind_cleaner_n3(event):
 """ Создание каскада окна программы. """
 root = Tk()
 root.iconbitmap("icon.ico")
-root.geometry("593x320+400+200")
+root.geometry("593x335+400+200")
 root.resizable(False, False)
 root.title("HeapSorter")
 
@@ -501,6 +501,15 @@ sort_all_button = Button(root, text="Отсортировать",
                                           (n3_count_entry, n3_entry, n3_out_entries))
                          )
 sort_all_button.grid(row=4, rowspan=2, column=1)
+
+exit_button = Button(root, text="Выйти",
+                                width=16,
+                                height=2,
+                                font="consolas 10 bold",
+                                bg="white",
+                                fg="#ff0000",
+                                command=lambda: exit_run(root))
+exit_button.grid(row=16, rowspan=2, column=2, columnspan=2, sticky="N")
 
 n1_count_entry.focus_set()
 
