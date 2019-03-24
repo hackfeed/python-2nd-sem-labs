@@ -291,7 +291,7 @@ def sort_timingly(size, dim_list):
             heapsort(ascending_sorted_list)
             end_time = time()
 
-            res_str = "{0:.5f}".format(end_time - start_time)
+            res_str = "{0:.5f}".format(end_time - start_time) + " c."
             time_list.append(res_str)
 
             """ Случайно заданный массив. """
@@ -301,7 +301,7 @@ def sort_timingly(size, dim_list):
             heapsort(random_sorted_list)
             end_time = time()
 
-            res_str = "{0:.5f}".format(end_time - start_time)
+            res_str = "{0:.5f}".format(end_time - start_time) + " c."
             time_list.append(res_str)
 
             """ Массив, упорядоченный по убыванию. """
@@ -312,7 +312,7 @@ def sort_timingly(size, dim_list):
             heapsort(descending_sorted_list)
             end_time = time()
 
-            res_str = "{0:.5f}".format(end_time - start_time)
+            res_str = "{0:.5f}".format(end_time - start_time) + " c."
             time_list.append(res_str)
 
             """ Массив, отсортированный встроенной функцией sort. """
@@ -321,7 +321,7 @@ def sort_timingly(size, dim_list):
             sort_sorted_list.sort()
             end_time = time()
 
-            res_str = "{0:.5f}".format(end_time - start_time)
+            res_str = "{0:.5f}".format(end_time - start_time) + " c."
             time_list.append(res_str)
 
             return time_list
