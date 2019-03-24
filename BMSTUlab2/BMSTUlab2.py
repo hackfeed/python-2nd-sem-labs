@@ -21,6 +21,22 @@ def int_list_getter(in_entry):
                                                     "правильность ввода!")
 
 
+def int_list_getter_dim(in_entry):
+    try:
+        int_list = [int(x) for x in in_entry.get().strip().split()]
+
+        if len(int_list) == 0 or len(int_list) > 2 or \
+                isinstance(int_list, (str, type(None))):
+            raise ValueError
+
+        return int_list
+
+    except ValueError:
+        messagebox.showerror("Ошибка ввода данных", "Данные введены "
+                                                    "некорректно, проверьте "
+                                                    "правильность ввода!")
+
+
 def label_writer(to_write, label_out):
     label_out["text"] = ""
     label_out["text"] += to_write
@@ -41,6 +57,13 @@ def clean_entry(*entries):
     for entry in entries:
         entry.config(state="normal")
         entry.delete(0, END)
+
+
+def clean_entry_list(entry_list):
+    for entry in entry_list:
+        entry.config(state="normal")
+        entry.delete(0, END)
+        entry.config(state="readonly")
 
 
 def clean_label(*labels):
@@ -109,52 +132,6 @@ def sort_visual():
     exit_visual_button.pack()
 
 
-def sort_timingly(size, dim_list):
-    if size < 1 or dim_list[0] >= dim_list[1]:
-        messagebox.showerror("Ошибка ввода", "Введены некорректные данные!\n"
-                             "Проверьте правильность ввода.")
-    else:
-        random_list = list()
-        time_list = list()
-
-        for i in range(size):
-            random_list.append(randint(dim_list[0], dim_list[1]))
-
-        ascending_sorted_list = random_list[:]
-        heapsort(ascending_sorted_list)
-        start_time = time()
-        heapsort(ascending_sorted_list)
-        end_time = time()
-
-        time_list.append(round(end_time - start_time, 4))
-
-        random_sorted_list = random_list[:]
-        heapsort(random_sorted_list)
-        start_time = time()
-        heapsort(random_sorted_list)
-        end_time = time()
-
-        time_list.append(round(end_time - start_time, 4))
-
-        descending_sorted_list = random_list[:]
-        heapsort(descending_sorted_list)
-        descending_sorted_list.reverse()
-        start_time = time()
-        heapsort(descending_sorted_list)
-        end_time = time()
-
-        time_list.append(round(end_time - start_time, 4))
-
-        sort_sorted_list = random_list[:]
-        start_time = time()
-        sort_sorted_list.sort()
-        end_time = time()
-
-        time_list.append(round(end_time - start_time, 4))
-
-        return time_list
-
-
 def about():
     """" Вывод окна "О программе" """
     about_window = Toplevel(root)
@@ -195,9 +172,118 @@ def about():
     exit_about.pack()
 
 
+def sort_timingly(size, dim_list):
+    try:
+        if size < 1 or dim_list[0] >= dim_list[1]:
+            messagebox.showerror("Ошибка ввода", "Введены некорректные данные!\n"
+                                 "Проверьте правильность ввода.")
+        else:
+            random_list = list()
+            time_list = list()
+
+            for i in range(size):
+                random_list.append(randint(dim_list[0], dim_list[1]))
+
+            ascending_sorted_list = random_list[:]
+            heapsort(ascending_sorted_list)
+            start_time = time()
+            heapsort(ascending_sorted_list)
+            end_time = time()
+
+            time_list.append(round(end_time - start_time, 7))
+
+            random_sorted_list = random_list[:]
+            heapsort(random_sorted_list)
+            start_time = time()
+            heapsort(random_sorted_list)
+            end_time = time()
+
+            time_list.append(round(end_time - start_time, 7))
+
+            descending_sorted_list = random_list[:]
+            heapsort(descending_sorted_list)
+            descending_sorted_list.reverse()
+            start_time = time()
+            heapsort(descending_sorted_list)
+            end_time = time()
+
+            time_list.append(round(end_time - start_time, 7))
+
+            sort_sorted_list = random_list[:]
+            start_time = time()
+            sort_sorted_list.sort()
+            end_time = time()
+
+            time_list.append(round(end_time - start_time, 7))
+
+            return time_list
+
+    except TypeError:
+        pass
+
+
+def sort_comparative(entry_in_n, entry_in_dim, entry_out_list):
+    try:
+        n_value = int(entry_in_n.get().strip())
+        if n_value < 1:
+            raise ValueError
+        else:
+            dim_list = int_list_getter_dim(entry_in_dim)
+            for entry in entry_out_list:
+                entry.config(state="normal")
+                entry.delete(0, END)
+
+            sorted_time_list = sort_timingly(n_value, dim_list)
+
+            k = 0
+
+            for entry in entry_out_list:
+                entry.insert(0, sorted_time_list[k])
+                entry.config(state="readonly")
+                k += 1
+
+    except ValueError:
+        messagebox.showerror("Ошибка ввода данных", "Данные введены "
+                                                    "некорректно, проверьте "
+                                                    "правильность ввода!")
+
+    except TypeError:
+        pass
+
+
 def exit_run(root):
     """ Выход из программы. """
     root.destroy()
+
+
+def bind_sort_n1(event):
+    """ Перевод при нажатии на клавишу Enter. """
+    sort_comparative(n1_count_entry, n1_entry, n1_out_entries)
+
+
+def bind_sort_n2(event):
+    """ Перевод при нажатии на клавишу Enter. """
+    sort_comparative(n2_count_entry, n2_entry, n2_out_entries)
+
+
+def bind_sort_n3(event):
+    """ Перевод при нажатии на клавишу Enter. """
+    sort_comparative(n3_count_entry, n3_entry, n3_out_entries)
+
+
+def bind_cleaner_n1(event):
+    """ Очистка поля вывода при нажатии любой клавиши. """
+    clean_entry_list(n1_out_entries)
+
+
+def bind_cleaner_n2(event):
+    """ Очистка поля вывода при нажатии любой клавиши. """
+    clean_entry_list(n2_out_entries)
+
+
+def bind_cleaner_n3(event):
+    """ Очистка поля вывода при нажатии любой клавиши. """
+    clean_entry_list(n3_out_entries)
 
 
 """ Создание каскада окна программы. """
@@ -215,25 +301,26 @@ clean_menu = Menu(main_menu, tearoff=0)
 clean_menu.add_command(label="Очистить поле ввода N1",
                        command=lambda: clean_entry(n1_entry, n1_count_entry))
 clean_menu.add_command(label="Очистить поле вывода N1",
-                       command=lambda: clean_label(label_out_n1))
+                       command=lambda: clean_entry_list(n1_out_entries))
 clean_menu.add_separator()
 clean_menu.add_command(label="Очистить поле ввода N2",
                        command=lambda: clean_entry(n2_entry, n2_count_entry))
 clean_menu.add_command(label="Очистить поле вывода N2",
-                       command=lambda: clean_label(label_out_n2))
+                       command=lambda: clean_entry_list(n2_out_entries))
 clean_menu.add_separator()
 clean_menu.add_command(label="Очистить поле ввода N3",
                        command=lambda: clean_entry(n3_entry, n3_count_entry))
 clean_menu.add_command(label="Очистить поле вывода N3",
-                       command=lambda: clean_label(label_out_n3))
+                       command=lambda: clean_entry_list(n3_out_entries))
 clean_menu.add_separator()
 clean_menu.add_command(label="Очистить все поля",
                        command=lambda: (clean_entry(n1_entry, n1_count_entry,
                                                     n2_entry, n2_count_entry,
-                                                    n3_entry, n3_count_entry),
-                                        clean_label(label_out_n1,
-                                                    label_out_n2,
-                                                    label_out_n3)))
+                                                    n3_entry, n3_count_entry
+                                                    ),
+                                        clean_entry_list(n1_out_entries),
+                                        clean_entry_list(n2_out_entries),
+                                        clean_entry_list(n3_out_entries)))
 
 workmode_menu = Menu(main_menu, tearoff=0)
 workmode_menu.add_command(label="Режим визуализации",
@@ -387,15 +474,36 @@ sorted_sort_label = Label(root,
                      fg="white")
 sorted_sort_label.grid(row=14, rowspan=2, column=1)
 
-
-
 sort_all_button = Button(root, text="Отсортировать",
                          width=16,
                          height=2,
                          font="consolas 10 bold",
                          bg="white",
                          fg="#0ad325",
-                         command=lambda: sort_timingly(1, [5,7]))
+                         command=lambda: (sort_comparative
+                                          (n1_count_entry, n1_entry, n1_out_entries),
+                                          sort_comparative
+                                          (n2_count_entry, n2_entry, n2_out_entries),
+                                          sort_comparative
+                                          (n3_count_entry, n3_entry, n3_out_entries))
+                         )
 sort_all_button.grid(row=4, rowspan=2, column=1)
+
+n1_count_entry.focus_set()
+
+n1_count_entry.bind("<Return>", bind_sort_n1)
+n1_count_entry.bind("<Key>", bind_cleaner_n1)
+n1_entry.bind("<Return>", bind_sort_n1)
+n1_entry.bind("<Key>", bind_cleaner_n1)
+
+n2_count_entry.bind("<Return>", bind_sort_n2)
+n2_count_entry.bind("<Key>", bind_cleaner_n2)
+n2_entry.bind("<Return>", bind_sort_n2)
+n2_entry.bind("<Key>", bind_cleaner_n2)
+
+n3_count_entry.bind("<Return>", bind_sort_n3)
+n3_count_entry.bind("<Key>", bind_cleaner_n3)
+n3_entry.bind("<Return>", bind_sort_n3)
+n3_entry.bind("<Key>", bind_cleaner_n3)
 
 root.mainloop()
