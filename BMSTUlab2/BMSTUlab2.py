@@ -72,6 +72,15 @@ def clean_label(*labels):
 
 
 def sort_visual():
+    def bind_visual_sort(event):
+        label_writer(
+            step_by_step_heapsort(int_list_getter(s_v_w_entry)),
+            s_v_w_result_label
+        )
+
+    def bind_visual_clean(event):
+        clean_label(s_v_w_result_label)
+
     sort_visual_window = Toplevel(root)
     sort_visual_window.grab_set()
     sort_visual_window.iconbitmap("icon.ico")
@@ -81,7 +90,8 @@ def sort_visual():
     sort_visual_window.config(bg="#000080")
 
     s_v_w_welcome_label = Label(sort_visual_window,
-                                text="\nВведите массив малой размерности:\n",
+                                text="\nВведите массив малой размерности\n"
+                                     "(до 5 элементов):",
                                 font="consolas 10",
                                 bg="#000080",
                                 fg="white")
@@ -130,6 +140,9 @@ def sort_visual():
                                 fg="#ff0000",
                                 command=lambda: exit_run(sort_visual_window))
     exit_visual_button.pack()
+
+    s_v_w_entry.bind("<Return>", bind_visual_sort)
+    s_v_w_entry.bind("<Key>", bind_visual_clean)
 
 
 def about():
