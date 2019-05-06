@@ -51,6 +51,17 @@ def get_int_list(in_entry):
 
 
 def is_triangle_exist(a_side, b_side, c_side):
+    """ Функция проверки треугольника на существование.
+
+    Передаваемые параметры:
+    * a_side, b_side, c_side - стороны треугольника
+
+    Возвращаемые значения:
+    * True/False в зависимости от того, существует треугольник
+    или нет
+
+    """
+
     if (a_side + b_side) > c_side and \
             (a_side + c_side) > b_side and \
             (b_side + c_side) > a_side:
@@ -60,6 +71,17 @@ def is_triangle_exist(a_side, b_side, c_side):
 
 
 def find_triangle_sides(a_dot_tuple, b_dot_tuple, c_dot_tuple):
+    """ Функция нахождения сторон треуголника.
+
+    Передаваемые параметры:
+    * a_dot_tuple, b_dot_tuple, c_dot_tuple - кортежи координат вершин
+    треугольника
+
+    Возвращаемые значения:
+    * a_side, b_side, c_side - стороны треугольника
+
+    """
+
     a_side = hypot(a_dot_tuple[0] - b_dot_tuple[0], a_dot_tuple[1] - b_dot_tuple[1])
     b_side = hypot(b_dot_tuple[0] - c_dot_tuple[0], b_dot_tuple[1] - c_dot_tuple[1])
     c_side = hypot(a_dot_tuple[0] - c_dot_tuple[0], a_dot_tuple[1] - c_dot_tuple[1])
@@ -68,6 +90,15 @@ def find_triangle_sides(a_dot_tuple, b_dot_tuple, c_dot_tuple):
 
 
 def draw_triangle(first_dot_set_entry, second_dot_set_entry):
+    """ Функция нахождения треугольника, в котором будет располагаться
+    одинаковое количество точек первого и второго множества.
+
+    Передаваемые параметры:
+    * first_dot_set_entry, second_dot_set_entry - поля, в которые вводятся
+    координаты точек множеств
+
+    """
+
     first_dot_set = get_int_list(first_dot_set_entry)
     second_dot_set = get_int_list(second_dot_set_entry)
 
@@ -94,12 +125,15 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
 
         result_set = None
 
+        """ Перебор всех вершин треугольников. """
         for triangle_set in combinations(first_dot_tuple_set, 3):
             first_dot_set_dotsin = list()
             second_dot_set_dotsin = list()
 
             triangle_sides = find_triangle_sides(*triangle_set)
             if is_triangle_exist(*triangle_sides):
+                """ Проверка каждой точки из первого множества на нахождение 
+                внутри треугольника. """
                 for i in range(len(first_dot_tuple_set)):
                     first_cf = ((triangle_set[0][0] - first_dot_tuple_set[i][0]) *
                                 (triangle_set[1][1] - triangle_set[0][1]) -
@@ -120,6 +154,8 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
                             first_cf < 0 and second_cf < 0 and third_cf < 0):
                         first_dot_set_dotsin.append(first_dot_tuple_set[i])
 
+                """ Проверка каждой точки из второго множества на нахождение 
+                внутри треугольника. """
                 for i in range(len(second_dot_tuple_set)):
                     first_cf = ((triangle_set[0][0] - second_dot_tuple_set[i][0]) *
                                 (triangle_set[1][1] - triangle_set[0][1]) -
@@ -153,7 +189,8 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
 
         messagebox.showinfo("О точках", "Красные точки - точки из первого множества\n"
                                         "Зеленые точки - точки из второго множества")
-        
+
+        """ Организация визуализации магического треугольника. """
         draw_window = Toplevel(root)
         draw_window.grab_set()
         draw_window.iconbitmap("icon.ico")
@@ -166,6 +203,7 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
         draw_canvas.focus_set()
         draw_canvas.pack()
 
+        """ Масштабирование графика. """
         winx = 800
         winy = 600
 
@@ -191,16 +229,19 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
         offsetx = -xmin * scalex + 10
         offsety = -ymin * scaley + 10
 
+        """ Отрисовка точек первого множества. """
         for i in range(len(first_dot_set_x)):
             x_new = first_dot_set_x[i] * scalex + offsetx
             y_new = winy - (first_dot_set_y[i] * scaley + offsety)
             draw_canvas.create_oval(x_new - 6, y_new - 6, x_new + 6, y_new + 6, fill="red")
 
+        """ Отрисовка точек второго множества. """
         for i in range(len(second_dot_set_x)):
             x_new = second_dot_set_x[i] * scalex + offsetx
             y_new = winy - (second_dot_set_y[i] * scaley + offsety)
             draw_canvas.create_oval(x_new - 6, y_new - 6, x_new + 6, y_new + 6, fill="green")
 
+        """ Отрисовка сторон треугольника. """
         result_draw = list()
 
         for i in range(len(result_set)):
