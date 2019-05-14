@@ -84,7 +84,7 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
 
             def line_kx(x1, x2, y1, y2):
                 if x2 - x1 == 0:
-                    return (y2 - y1) / (x2 - (x1 + 0.001)), -(x1 * (y2 - y1)) / (x2 - (x1 + 0.001)) + y1
+                    return (y2 - y1) / (x2 - (x1 + 0.000001)), -(x1 * (y2 - y1)) / (x2 - (x1 + 0.000001)) + y1
                 else:
                     return (y2 - y1) / (x2 - x1), -(x1 * (y2 - y1)) / (x2 - x1) + y1
 
