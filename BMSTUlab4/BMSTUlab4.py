@@ -78,9 +78,21 @@ def find_triangle_sides(a_dot_tuple, b_dot_tuple, c_dot_tuple):
 
     """
 
-    a_side = hypot(a_dot_tuple[0] - b_dot_tuple[0], a_dot_tuple[1] - b_dot_tuple[1])
-    b_side = hypot(b_dot_tuple[0] - c_dot_tuple[0], b_dot_tuple[1] - c_dot_tuple[1])
-    c_side = hypot(a_dot_tuple[0] - c_dot_tuple[0], a_dot_tuple[1] - c_dot_tuple[1])
+    a_side = hypot(
+        a_dot_tuple[0] -
+        b_dot_tuple[0],
+        a_dot_tuple[1] -
+        b_dot_tuple[1])
+    b_side = hypot(
+        b_dot_tuple[0] -
+        c_dot_tuple[0],
+        b_dot_tuple[1] -
+        c_dot_tuple[1])
+    c_side = hypot(
+        a_dot_tuple[0] -
+        c_dot_tuple[0],
+        a_dot_tuple[1] -
+        c_dot_tuple[1])
 
     return a_side, b_side, c_side
 
@@ -115,9 +127,16 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
         all_dot_set_x = first_dot_set_x + second_dot_set_x
         all_dot_set_y = first_dot_set_y + second_dot_set_y
 
-        first_dot_tuple_set = [(first_dot_set_x[i], first_dot_set_y[i]) for i in range(len(first_dot_set_x))]
-        second_dot_tuple_set = [(second_dot_set_x[i], second_dot_set_y[i]) for i in range(len(second_dot_set_x))]
-        all_dot_tuple_set = [(all_dot_set_x[i], all_dot_set_y[i]) for i in range(len(all_dot_set_x))]
+        first_dot_tuple_set = [
+            (first_dot_set_x[i],
+             first_dot_set_y[i]) for i in range(
+                len(first_dot_set_x))]
+        second_dot_tuple_set = [
+            (second_dot_set_x[i],
+             second_dot_set_y[i]) for i in range(
+                len(second_dot_set_x))]
+        all_dot_tuple_set = [(all_dot_set_x[i], all_dot_set_y[i])
+                             for i in range(len(all_dot_set_x))]
 
         result_set = None
 
@@ -128,63 +147,90 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
 
             triangle_sides = find_triangle_sides(*triangle_set)
             if is_triangle_exist(*triangle_sides):
-                """ Проверка каждой точки из первого множества на нахождение 
+                """ Проверка каждой точки из первого множества на нахождение
                 внутри треугольника. """
                 for i in range(len(first_dot_tuple_set)):
-                    first_cf = ((triangle_set[0][0] - first_dot_tuple_set[i][0]) *
-                                (triangle_set[1][1] - triangle_set[0][1]) -
-                                (triangle_set[1][0] - triangle_set[0][0]) *
-                                (triangle_set[0][1] - first_dot_tuple_set[i][1]))
+                    first_cf = ((triangle_set[0][0] -
+                                 first_dot_tuple_set[i][0]) *
+                                (triangle_set[1][1] -
+                                 triangle_set[0][1]) -
+                                (triangle_set[1][0] -
+                                 triangle_set[0][0]) *
+                                (triangle_set[0][1] -
+                                 first_dot_tuple_set[i][1]))
 
-                    second_cf = ((triangle_set[1][0] - first_dot_tuple_set[i][0]) *
-                                 (triangle_set[2][1] - triangle_set[1][1]) -
-                                 (triangle_set[2][0] - triangle_set[1][0]) *
-                                 (triangle_set[1][1] - first_dot_tuple_set[i][1]))
+                    second_cf = ((triangle_set[1][0] -
+                                  first_dot_tuple_set[i][0]) *
+                                 (triangle_set[2][1] -
+                                  triangle_set[1][1]) -
+                                 (triangle_set[2][0] -
+                                  triangle_set[1][0]) *
+                                 (triangle_set[1][1] -
+                                  first_dot_tuple_set[i][1]))
 
-                    third_cf = ((triangle_set[2][0] - first_dot_tuple_set[i][0]) *
-                                (triangle_set[0][1] - triangle_set[2][1]) -
-                                (triangle_set[0][0] - triangle_set[2][0]) *
-                                (triangle_set[2][1] - first_dot_tuple_set[i][1]))
+                    third_cf = ((triangle_set[2][0] -
+                                 first_dot_tuple_set[i][0]) *
+                                (triangle_set[0][1] -
+                                 triangle_set[2][1]) -
+                                (triangle_set[0][0] -
+                                 triangle_set[2][0]) *
+                                (triangle_set[2][1] -
+                                 first_dot_tuple_set[i][1]))
 
                     if (first_cf > 0 and second_cf > 0 and third_cf > 0 or
                             first_cf < 0 and second_cf < 0 and third_cf < 0):
                         first_dot_set_dotsin.append(first_dot_tuple_set[i])
 
-                """ Проверка каждой точки из второго множества на нахождение 
+                """ Проверка каждой точки из второго множества на нахождение
                 внутри треугольника. """
                 for i in range(len(second_dot_tuple_set)):
-                    first_cf = ((triangle_set[0][0] - second_dot_tuple_set[i][0]) *
-                                (triangle_set[1][1] - triangle_set[0][1]) -
-                                (triangle_set[1][0] - triangle_set[0][0]) *
-                                (triangle_set[0][1] - second_dot_tuple_set[i][1]))
+                    first_cf = ((triangle_set[0][0] -
+                                 second_dot_tuple_set[i][0]) *
+                                (triangle_set[1][1] -
+                                 triangle_set[0][1]) -
+                                (triangle_set[1][0] -
+                                 triangle_set[0][0]) *
+                                (triangle_set[0][1] -
+                                 second_dot_tuple_set[i][1]))
 
-                    second_cf = ((triangle_set[1][0] - second_dot_tuple_set[i][0]) *
-                                 (triangle_set[2][1] - triangle_set[1][1]) -
-                                 (triangle_set[2][0] - triangle_set[1][0]) *
-                                 (triangle_set[1][1] - second_dot_tuple_set[i][1]))
+                    second_cf = ((triangle_set[1][0] -
+                                  second_dot_tuple_set[i][0]) *
+                                 (triangle_set[2][1] -
+                                  triangle_set[1][1]) -
+                                 (triangle_set[2][0] -
+                                  triangle_set[1][0]) *
+                                 (triangle_set[1][1] -
+                                  second_dot_tuple_set[i][1]))
 
-                    third_cf = ((triangle_set[2][0] - second_dot_tuple_set[i][0]) *
-                                (triangle_set[0][1] - triangle_set[2][1]) -
-                                (triangle_set[0][0] - triangle_set[2][0]) *
-                                (triangle_set[2][1] - second_dot_tuple_set[i][1]))
+                    third_cf = ((triangle_set[2][0] -
+                                 second_dot_tuple_set[i][0]) *
+                                (triangle_set[0][1] -
+                                 triangle_set[2][1]) -
+                                (triangle_set[0][0] -
+                                 triangle_set[2][0]) *
+                                (triangle_set[2][1] -
+                                 second_dot_tuple_set[i][1]))
 
                     if (first_cf > 0 and second_cf > 0 and third_cf > 0 or
                             first_cf < 0 and second_cf < 0 and third_cf < 0):
                         second_dot_set_dotsin.append(second_dot_tuple_set[i])
 
-                if (len(first_dot_set_dotsin) == len(second_dot_set_dotsin) and
-                        len(first_dot_set_dotsin) + len(second_dot_set_dotsin) != 0):
+                if (len(first_dot_set_dotsin) == len(second_dot_set_dotsin) and len(
+                        first_dot_set_dotsin) + len(second_dot_set_dotsin) != 0):
                     result_set = triangle_set
                     break
 
         if result_set is None:
-            messagebox.showinfo("Что-то пошло не так", "Магический треугольник не найден, "
-                                                       "попробуйте другие точки!")
+            messagebox.showinfo(
+                "Что-то пошло не так",
+                "Магический треугольник не найден, "
+                "попробуйте другие точки!")
 
             return False
 
-        messagebox.showinfo("О точках", "Красные точки - точки из первого множества\n"
-                                        "Зеленые точки - точки из второго множества")
+        messagebox.showinfo(
+            "О точках", "Красные точки - точки из первого множества\n"
+            "Зеленые точки - точки из второго множества")
 
         """ Организация визуализации магического треугольника. """
         draw_window = Toplevel(root)
@@ -229,13 +275,23 @@ def draw_triangle(first_dot_set_entry, second_dot_set_entry):
         for i in range(len(first_dot_set_x)):
             x_new = first_dot_set_x[i] * scalex + offsetx
             y_new = winy - (first_dot_set_y[i] * scaley + offsety)
-            draw_canvas.create_oval(x_new - 6, y_new - 6, x_new + 6, y_new + 6, fill="red")
+            draw_canvas.create_oval(
+                x_new - 6,
+                y_new - 6,
+                x_new + 6,
+                y_new + 6,
+                fill="red")
 
         """ Отрисовка точек второго множества. """
         for i in range(len(second_dot_set_x)):
             x_new = second_dot_set_x[i] * scalex + offsetx
             y_new = winy - (second_dot_set_y[i] * scaley + offsety)
-            draw_canvas.create_oval(x_new - 6, y_new - 6, x_new + 6, y_new + 6, fill="green")
+            draw_canvas.create_oval(
+                x_new - 6,
+                y_new - 6,
+                x_new + 6,
+                y_new + 6,
+                fill="green")
 
         """ Отрисовка сторон треугольника. """
         result_draw = list()
