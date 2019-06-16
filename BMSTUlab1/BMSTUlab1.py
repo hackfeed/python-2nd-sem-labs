@@ -207,7 +207,7 @@ clear_btn = Button(text="C",
                    bg="white",
                    fg="#000080",
                    command=lambda:
-                   (entry_in.delete(len(entry_in.get())-1, END),
+                   (entry_in.delete(len(entry_in.get()) - 1, END),
                     entry_out.config(state="normal"),
                     entry_out.delete(0, END),
                     entry_out.config(state="readonly")))

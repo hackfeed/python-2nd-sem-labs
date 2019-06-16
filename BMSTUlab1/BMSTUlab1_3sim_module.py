@@ -157,8 +157,8 @@ def transform(number):
 
     pm_set = ("+", "-")
 
-    if number.isdigit() or \
-    number[1:].isdigit() and int(number[1:]) > 0 and number[0] in pm_set:
+    if number.isdigit() or number[1:].isdigit() and int(
+            number[1:]) > 0 and number[0] in pm_set:
         result_number = transform_to_3sim(number)
 
     else:  # docstring коммент не работает. Перевод из 3sim в 10-чную СС
