@@ -43,9 +43,13 @@ def draw_chair():
 def draw_fisherman():
     """ Отрисовка рыбака. """
     pg.draw.rect(screen, BLACK, (640, WINY - 280, 20, 50))
-    pg.draw.polygon(screen, SKIN, [(642, WINY - 230), (658, WINY - 230), (620, WINY - 202), (610, WINY - 202)])
+    pg.draw.polygon(
+        screen, SKIN, [
+            (642, WINY - 230), (658, WINY - 230), (620, WINY - 202), (610, WINY - 202)])
     pg.draw.rect(screen, GREY, (607, WINY - 202, 22, 2))
-    pg.draw.polygon(screen, SKIN, [(647, WINY - 265), (647, WINY - 255), (625, WINY - 240), (625, WINY - 245)])
+    pg.draw.polygon(
+        screen, SKIN, [
+            (647, WINY - 265), (647, WINY - 255), (625, WINY - 240), (625, WINY - 245)])
     pg.draw.line(screen, BLACK, (625, WINY - 242), (500, WINY - 367), 3)
     pg.draw.circle(screen, GREY, (615, WINY - 252), 7)
     pg.draw.circle(screen, SKIN, (625, WINY - 242), 4)
@@ -68,8 +72,10 @@ def draw_fishing_line(end_pos_y):
     pg.draw.line(screen, WHITE, (500, WINY - 366), (500, WINY - end_pos_y), 2)
     pg.draw.circle(screen, GREY, (500, WINY - 366), 3)
     pg.draw.circle(screen, GREY, (500, WINY - end_pos_y), 3)
-    pg.draw.line(screen, GREY, (500, WINY - end_pos_y), (500, WINY - end_pos_y + 3), 2)
-    pg.draw.line(screen, GREY, (497, WINY - end_pos_y + 3), (500, WINY - end_pos_y + 3), 2)
+    pg.draw.line(screen, GREY, (500, WINY - end_pos_y),
+                 (500, WINY - end_pos_y + 3), 2)
+    pg.draw.line(screen, GREY, (497, WINY - end_pos_y + 3),
+                 (500, WINY - end_pos_y + 3), 2)
     pg.draw.circle(screen, RED, (500, WINY - end_pos_y - 100), 6)
     pg.draw.circle(screen, RED, (500, WINY - end_pos_y - 103), 6)
     pg.draw.circle(screen, RED, (500, WINY - end_pos_y - 97), 6)
@@ -100,10 +106,22 @@ def draw_fish(rect_start_x, end_pos_y):
 
     """
 
-    pg.draw.ellipse(screen, FISH_BODY, (rect_start_x, WINY - end_pos_y, 30, 12))
-    pg.draw.polygon(screen, FISH_TAIL, [(rect_start_x, WINY - end_pos_y + 6),
-                                        (rect_start_x - 10, WINY - end_pos_y - 3),
-                                        (rect_start_x - 10, WINY - end_pos_y + 12)])
+    pg.draw.ellipse(
+        screen,
+        FISH_BODY,
+        (rect_start_x,
+         WINY -
+         end_pos_y,
+         30,
+         12))
+    pg.draw.polygon(screen,
+                    FISH_TAIL,
+                    [(rect_start_x,
+                      WINY - end_pos_y + 6),
+                     (rect_start_x - 10,
+                      WINY - end_pos_y - 3),
+                        (rect_start_x - 10,
+                         WINY - end_pos_y + 12)])
     pg.draw.circle(screen, SEA, (rect_start_x + 27, WINY - end_pos_y + 5), 2)
 
 
