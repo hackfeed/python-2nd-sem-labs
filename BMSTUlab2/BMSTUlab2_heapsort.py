@@ -21,7 +21,7 @@ def heapify(in_list, n, i):
     left_s = 2 * i + 1  # Инициализация левого поддерева
     right_s = 2 * i + 2  # Инициализация правого поддерева
 
-    """ Проверка на существование левых и правх поддеревьев 
+    """ Проверка на существование левых и правх поддеревьев
     и сравнение их с корнем. """
     if left_s < n and in_list[i] < in_list[left_s]:
         largest_node = left_s
@@ -50,12 +50,12 @@ def heapsort(in_list):
 
     n = len(in_list)
 
-    """ Формирование максимальной кучи (куча, у узлов которой 
+    """ Формирование максимальной кучи (куча, у узлов которой
     каждый родитель больше потомков). """
     for i in range(n, -1, -1):
         heapify(in_list, n, i)
 
-    """ Замена корня с последним элементом, "удаление" 
+    """ Замена корня с последним элементом, "удаление"
     последнего элемента из дерева. """
     for i in range(n - 1, 0, -1):
         in_list[i], in_list[0] = in_list[0], in_list[i]
@@ -88,7 +88,8 @@ def step_by_step_heapsort(in_list):
         for i in range(n - 1, 0, -1):
             in_list[i], in_list[0] = in_list[0], in_list[i]
             in_list_cp = in_list[:]
-            res_str += "Меняем корень с последним узлом\n" + str(in_list_cp) + "\n"
+            res_str += "Меняем корень с последним узлом\n" + \
+                str(in_list_cp) + "\n"
             heapify(in_list, i, 0)
             in_list_cp = in_list[:]
             res_str += "Формируем максимальную кучу\n" + str(in_list_cp) + "\n"

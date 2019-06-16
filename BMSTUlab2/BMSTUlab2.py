@@ -274,9 +274,11 @@ def sort_timingly(size, dim_list):
 
     try:
         if size < 1 or dim_list[0] >= dim_list[1]:
-            messagebox.showerror("Ошибка ввода данных", "Данные введены "
-                                                        "некорректно, проверьте "
-                                                        "правильность ввода!")
+            messagebox.showerror(
+                "Ошибка ввода данных",
+                "Данные введены "
+                "некорректно, проверьте "
+                "правильность ввода!")
         else:
             random_list = list()
             time_list = list()
@@ -330,10 +332,11 @@ def sort_timingly(size, dim_list):
         pass
 
     except IndexError:
-        messagebox.showinfo("Неполные данные", "Данные введены "
-                                               "некорректно. Пожалуйста, "
-                                               "введите диапазон в формате "
-                                               "<левая_граница правая_граница>!")
+        messagebox.showinfo(
+            "Неполные данные", "Данные введены "
+            "некорректно. Пожалуйста, "
+            "введите диапазон в формате "
+            "<левая_граница правая_граница>!")
 
 
 def sort_comparative(entry_in_n, entry_in_dim, entry_out_list):
@@ -454,9 +457,9 @@ workmode_menu.add_command(label="Режим визуализации",
                           command=lambda: sort_visual())
 workmode_menu.add_command(label="Режим сравнения",
                           command=lambda: messagebox.showinfo(
-                                                    "Необходимый режим",
-                                                    "Вы уже в необходимом "
-                                                    "режиме!"))
+                              "Необходимый режим",
+                              "Вы уже в необходимом "
+                              "режиме!"))
 
 
 about_menu = Menu(main_menu, tearoff=0)
@@ -523,7 +526,11 @@ n1_rand_sorted = Entry(root, width=20)
 n1_rand_sorted.grid(row=12, rowspan=2, column=2)
 n1_sort_sorted = Entry(root, width=20)
 n1_sort_sorted.grid(row=14, rowspan=2, column=2)
-n1_out_entries = [n1_asc_sorted, n1_desc_sorted, n1_rand_sorted, n1_sort_sorted]
+n1_out_entries = [
+    n1_asc_sorted,
+    n1_desc_sorted,
+    n1_rand_sorted,
+    n1_sort_sorted]
 for entry in n1_out_entries:
     entry.config(state="readonly")
 
@@ -545,7 +552,11 @@ n2_rand_sorted = Entry(root, width=20)
 n2_rand_sorted.grid(row=12, rowspan=2, column=3)
 n2_sort_sorted = Entry(root, width=20)
 n2_sort_sorted.grid(row=14, rowspan=2, column=3)
-n2_out_entries = [n2_asc_sorted, n2_desc_sorted, n2_rand_sorted, n2_sort_sorted]
+n2_out_entries = [
+    n2_asc_sorted,
+    n2_desc_sorted,
+    n2_rand_sorted,
+    n2_sort_sorted]
 for entry in n2_out_entries:
     entry.config(state="readonly")
 
@@ -567,7 +578,11 @@ n3_rand_sorted = Entry(root, width=20)
 n3_rand_sorted.grid(row=12, rowspan=2, column=4)
 n3_sort_sorted = Entry(root, width=20)
 n3_sort_sorted.grid(row=14, rowspan=2, column=4)
-n3_out_entries = [n3_asc_sorted, n3_desc_sorted, n3_rand_sorted, n3_sort_sorted]
+n3_out_entries = [
+    n3_asc_sorted,
+    n3_desc_sorted,
+    n3_rand_sorted,
+    n3_sort_sorted]
 for entry in n3_out_entries:
     entry.config(state="readonly")
 
@@ -602,19 +617,27 @@ sorted_sort_label = Label(root,
                           fg="white")
 sorted_sort_label.grid(row=14, rowspan=2, column=1)
 
-sort_all_button = Button(root, text="Отсортировать",
-                         width=16,
-                         height=2,
-                         font="consolas 10 bold",
-                         bg="white",
-                         fg="#0ad325",
-                         command=lambda: (sort_comparative
-                                          (n1_count_entry, n1_entry, n1_out_entries),
-                                          sort_comparative
-                                          (n2_count_entry, n2_entry, n2_out_entries),
-                                          sort_comparative
-                                          (n3_count_entry, n3_entry, n3_out_entries))
-                         )
+sort_all_button = Button(
+    root,
+    text="Отсортировать",
+    width=16,
+    height=2,
+    font="consolas 10 bold",
+    bg="white",
+    fg="#0ad325",
+    command=lambda: (
+        sort_comparative(
+            n1_count_entry,
+            n1_entry,
+            n1_out_entries),
+        sort_comparative(
+            n2_count_entry,
+            n2_entry,
+            n2_out_entries),
+        sort_comparative(
+            n3_count_entry,
+            n3_entry,
+            n3_out_entries)))
 sort_all_button.grid(row=4, rowspan=2, column=1)
 
 exit_button = Button(root, text="Выйти",
