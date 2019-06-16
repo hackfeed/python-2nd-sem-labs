@@ -140,26 +140,18 @@ def calculate_roots(dim_entry, step_entry, eps_entry, maxiter_entry):
             right_verge = dim_list[0] + step * n if \
                 dim_list[0] + step * n < dim_list[1] else dim_list[1]
 
-            froot, iter_num, error_code = steffensen_root_finding(left_verge,
-                                                                  right_verge,
-                                                                  eps,
-                                                                  maxiter,
-                                                                  x_curr=left_verge)
+            froot, iter_num, error_code = steffensen_root_finding(
+                left_verge, right_verge, eps, maxiter, x_curr=left_verge)
 
             if error_code == 2:
-                froot, iter_num, error_code = steffensen_root_finding(left_verge,
-                                                                      right_verge,
-                                                                      eps,
-                                                                      maxiter,
-                                                                      x_curr=right_verge)
+                froot, iter_num, error_code = steffensen_root_finding(
+                    left_verge, right_verge, eps, maxiter, x_curr=right_verge)
 
                 if error_code == 2:
-                    froot, iter_num, error_code = steffensen_root_finding(left_verge,
-                                                                          right_verge,
-                                                                          eps,
-                                                                          maxiter,
-                                                                          x_curr=((left_verge + right_verge) / 2))
-            if (error_code == 0 or error_code == 1) and (len(x_root) == 0 or abs(froot - x_root[-1]) > 2 * eps):
+                    froot, iter_num, error_code = steffensen_root_finding(
+                        left_verge, right_verge, eps, maxiter, x_curr=((left_verge + right_verge) / 2))
+            if (error_code == 0 or error_code == 1) and (
+                    len(x_root) == 0 or abs(froot - x_root[-1]) > 2 * eps):
                 n_list.append(n)
                 x_root.append(froot)
                 fx_root.append(f(froot))
@@ -195,11 +187,17 @@ def find_roots(dim_entry, step_entry, eps_entry, maxiter_entry):
 
     """
 
-    calculated = calculate_roots(dim_entry, step_entry, eps_entry, maxiter_entry)
+    calculated = calculate_roots(
+        dim_entry,
+        step_entry,
+        eps_entry,
+        maxiter_entry)
 
     if calculated:
         if (len(calculated[0]) == 0):
-            messagebox.showinfo("Корни не найдены", "Корней на заданном интервале нет")
+            messagebox.showinfo(
+                "Корни не найдены",
+                "Корней на заданном интервале нет")
         else:
             find_roots_window = Toplevel(root)
             find_roots_window.grab_set()
@@ -207,8 +205,9 @@ def find_roots(dim_entry, step_entry, eps_entry, maxiter_entry):
             find_roots_window.iconbitmap("icon.ico")
             find_roots_window.geometry("605x500+840+200")
             find_roots_window.resizable(False, True)
-            find_roots_window.title("Таблица найденных приближенных значений корней. "
-                                    "Steffenson Root-Finder")
+            find_roots_window.title(
+                "Таблица найденных приближенных значений корней. "
+                "Steffenson Root-Finder")
             find_roots_window.config(bg="#000080")
 
             f_r_w_welcome_label = Label(find_roots_window,
@@ -283,16 +282,19 @@ def find_roots(dim_entry, step_entry, eps_entry, maxiter_entry):
                                   fg="#000080",
                                   width=4,
                                   height=1)
-                num_label.place(x=10, y=cur_y+25)
+                num_label.place(x=10, y=cur_y + 25)
 
-                int_label = Label(find_roots_window,
-                                  text="[{:.4f}; {:.4f}]".format(calculated[3][i], calculated[4][i]),
-                                  font="consolas 10 bold",
-                                  bg="white",
-                                  fg="#000080",
-                                  width=20,
-                                  height=1)
-                int_label.place(x=50, y=cur_y+25)
+                int_label = Label(
+                    find_roots_window,
+                    text="[{:.4f}; {:.4f}]".format(
+                        calculated[3][i],
+                        calculated[4][i]),
+                    font="consolas 10 bold",
+                    bg="white",
+                    fg="#000080",
+                    width=20,
+                    height=1)
+                int_label.place(x=50, y=cur_y + 25)
 
                 root_label = Label(find_roots_window,
                                    text="{:.4f}".format(calculated[1][i]),
@@ -301,7 +303,7 @@ def find_roots(dim_entry, step_entry, eps_entry, maxiter_entry):
                                    fg="#000080",
                                    width=8,
                                    height=1)
-                root_label.place(x=202, y=cur_y+25)
+                root_label.place(x=202, y=cur_y + 25)
 
                 froot_label = Label(find_roots_window,
                                     text="{:.0e}".format(calculated[2][i]),
@@ -310,7 +312,7 @@ def find_roots(dim_entry, step_entry, eps_entry, maxiter_entry):
                                     fg="#000080",
                                     width=12,
                                     height=1)
-                froot_label.place(x=270, y=cur_y+25)
+                froot_label.place(x=270, y=cur_y + 25)
 
                 iter_label = Label(find_roots_window,
                                    text=str(calculated[5][i]),
@@ -328,13 +330,17 @@ def find_roots(dim_entry, step_entry, eps_entry, maxiter_entry):
                                   fg="#000080",
                                   width=15,
                                   height=1)
-                err_label.place(x=484, y=cur_y+25)
+                err_label.place(x=484, y=cur_y + 25)
 
                 cur_y += 25
 
 
 def draw_plot(dim_entry, step_entry, eps_entry, maxiter_entry):
-    calculated = calculate_roots(dim_entry, step_entry, eps_entry, maxiter_entry)
+    calculated = calculate_roots(
+        dim_entry,
+        step_entry,
+        eps_entry,
+        maxiter_entry)
 
     x = [0] * 50000
     fx = [0] * 50000
@@ -368,7 +374,11 @@ def draw_plot(dim_entry, step_entry, eps_entry, maxiter_entry):
     plt.clf()
     plt.grid(True)
     plt.plot(x, fx, color="black", linewidth=1)
-    plt.scatter(max_min_graph_dots_x, max_min_graph_dots_y, color="red", linewidth=0.5)
+    plt.scatter(
+        max_min_graph_dots_x,
+        max_min_graph_dots_y,
+        color="red",
+        linewidth=0.5)
     plt.scatter(calculated[1], calculated[2], color="green", linewidth=0.5)
 
     plt.title("f(x) = " + str_f())
@@ -429,9 +439,10 @@ def about():
 
 
 def get_code_info():
-    messagebox.showinfo("Коды ошибок", "0 - корень найден\n"
-                                       "1 - корень найден за большее количество итераций\n"
-                                       "2 - корень не найден на интервале")
+    messagebox.showinfo(
+        "Коды ошибок", "0 - корень найден\n"
+        "1 - корень найден за большее количество итераций\n"
+        "2 - корень не найден на интервале")
 
 
 def exit_run(root):

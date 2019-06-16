@@ -12,7 +12,7 @@ def f(x):
     * func(x) - значение функции в аргументе
 
     """
-    
+
     return x ** 4 - 2 * x ** 2 - 4
 
 
@@ -38,7 +38,7 @@ def steffensen_root_finding(left_verge, right_verge, eps, max_iters, x_curr):
     * err_code - код ошибки
 
     """
-    
+
     current_iters = 0
 
     if f(x_curr) == 0:
